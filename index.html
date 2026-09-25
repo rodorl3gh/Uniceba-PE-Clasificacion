@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clasificación Estratégica | UNICEBA · Sesión 10</title>
+<title>¿Objetivo o Sub-objetivo? | UNICEBA · Sesión 10</title>
 <style>
 :root {
   --uniceba-blue: #003366;
@@ -26,9 +26,7 @@ img, video { max-width: 100%; height: auto; }
 body {
   font-family: Calibri, 'Segoe UI', system-ui, -apple-system, sans-serif;
   background: linear-gradient(135deg, #e8edf3 0%, #dce3ed 30%, #eef1f6 60%, #e3e8f0 100%);
-  min-height: 100vh;
-  color: var(--text);
-  overflow-wrap: break-word;
+  min-height: 100vh; color: var(--text); overflow-wrap: break-word;
 }
 body::before {
   content: ''; position: fixed; top: -200px; right: -200px;
@@ -80,52 +78,33 @@ main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 10px; position: rel
 }
 .level-info { display: flex; flex-direction: column; }
 .level-info .lvl-label {
-  font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-light);
-  font-weight: 700;
+  font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-light); font-weight: 700;
 }
 .level-info .lvl-title { font-size: 17px; font-weight: 700; color: var(--uniceba-blue); }
 .track { display: flex; gap: 8px; align-items: center; }
-.dot {
-  width: 30px; height: 8px; border-radius: 8px; background: #d5dce6; transition: all .3s;
-}
+.dot { width: 30px; height: 8px; border-radius: 8px; background: #d5dce6; transition: all .3s; }
 .dot.active { background: var(--uniceba-gold); }
 .dot.done { background: var(--uniceba-blue); }
 .counter { font-size: 13px; font-weight: 700; color: var(--text-light); font-variant-numeric: tabular-nums; }
 
-.board { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.column { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow);
-  padding: 16px; border: 1px solid rgba(0,0,0,0.06); }
-.col-title {
-  font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-light);
-  font-weight: 800; text-align: center; margin-bottom: 12px; padding-bottom: 10px;
-  border-bottom: 2px solid var(--light-bg);
+.items { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.item-card {
+  background: var(--card-bg); border: 2px solid #e2e8f1; border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 14px; display: flex; flex-direction: column; gap: 12px;
+  transition: all .2s;
 }
-.col-title b { color: var(--uniceba-blue); }
-.cards { display: flex; flex-direction: column; gap: 10px; }
-
-.card {
-  display: flex; align-items: flex-start; gap: 10px;
-  background: var(--light-bg); border: 2px solid transparent;
-  border-radius: 10px; padding: 11px 12px; cursor: pointer;
-  transition: all .18s; position: relative; min-height: 54px;
+.item-card.done { border-color: #b9c9de; background: #fbfcfe; }
+.item-num { font-size: 11px; font-weight: 800; letter-spacing: 1px; color: var(--text-light); text-transform: uppercase; }
+.item-text { font-size: 14.5px; font-weight: 600; line-height: 1.4; }
+.item-actions { display: flex; gap: 8px; margin-top: auto; }
+.class-btn {
+  flex: 1; padding: 9px 8px; border-radius: 9px; border: 2px solid #d5dce6; background: #f7f9fc;
+  font-family: inherit; font-weight: 700; font-size: 12.5px; cursor: pointer; transition: all .18s;
+  color: var(--text-light);
 }
-.card:hover { background: #e6ecf4; transform: translateY(-1px); }
-.card .tag {
-  flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px;
-  background: var(--uniceba-blue); color: #fff; font-weight: 800; font-size: 13px;
-  display: flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums;
-}
-.sub-card .tag { background: var(--uniceba-accent); }
-.card .txt { font-size: 14px; line-height: 1.35; font-weight: 600; }
-.card.obj-card.linked { border-color: var(--uniceba-gold); background: #fbf6e8; }
-.card.sub-card.linked { border-color: var(--uniceba-gold); background: #fbf6e8; }
-.card.selected { border-color: var(--uniceba-blue); background: #e3ecf7; box-shadow: 0 0 0 3px rgba(0,51,102,0.12); }
-.card.obj-card.selected .tag { background: var(--uniceba-gold); color: var(--uniceba-blue); }
-.card .link-badge {
-  position: absolute; right: 8px; top: 8px; font-size: 11px; font-weight: 800;
-  background: var(--uniceba-gold); color: var(--uniceba-blue);
-  padding: 2px 8px; border-radius: 20px;
-}
+.class-btn:hover { border-color: #a9b8cc; }
+.class-btn.obj.active { background: var(--uniceba-blue); color: #fff; border-color: var(--uniceba-blue); }
+.class-btn.sub.active { background: var(--uniceba-gold); color: var(--uniceba-blue); border-color: var(--uniceba-gold); }
 
 .actions { display: flex; justify-content: center; margin: 20px 0 8px; }
 .btn {
@@ -157,6 +136,8 @@ main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 10px; position: rel
 .rules { background: var(--light-bg); border-radius: 12px; padding: 16px 20px; margin: 16px 0; }
 .rules li { font-size: 14px; line-height: 1.55; margin-left: 18px; margin-bottom: 6px; color: #333; }
 .rules li b { color: var(--uniceba-blue); }
+.tip-box { background: #fbf6e8; border: 1px solid #ecd9a8; border-radius: 12px; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.5; color: #6b5215; }
+.tip-box b { color: var(--uniceba-blue); }
 .levels-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
 .lv-box { background: #f7f9fc; border: 1px solid #e2e8f1; border-radius: 10px; padding: 12px; text-align: center; }
 .lv-box .n { font-weight: 800; color: var(--uniceba-blue); font-size: 15px; }
@@ -166,12 +147,9 @@ main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 10px; position: rel
 .score-circle {
   width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 12px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: conic-gradient(var(--uniceba-gold) var(--pct), #e6ebf2 0);
-  position: relative;
+  background: conic-gradient(var(--uniceba-gold) var(--pct), #e6ebf2 0); position: relative;
 }
-.score-circle::after {
-  content: ''; position: absolute; inset: 12px; background: #fff; border-radius: 50%;
-}
+.score-circle::after { content: ''; position: absolute; inset: 12px; background: #fff; border-radius: 50%; }
 .score-circle .num { position: relative; z-index: 2; font-size: 42px; font-weight: 900; color: var(--uniceba-blue); line-height: 1; }
 .score-circle .of { position: relative; z-index: 2; font-size: 13px; color: var(--text-light); font-weight: 700; }
 .grade-line { font-size: 18px; font-weight: 800; color: var(--uniceba-blue); }
@@ -193,16 +171,12 @@ main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 10px; position: rel
 @media (max-width: 640px) {
   .header { padding: 12px 16px; }
   .header h1 { font-size: 16px; }
-  main { padding: 14px 10px 6px; }
-  .board { gap: 8px; }
-  .column { padding: 10px 8px; }
-  .card { padding: 9px 8px; gap: 7px; min-height: 48px; }
-  .card .txt { font-size: 12.5px; }
-  .card .tag { width: 26px; height: 26px; font-size: 11px; }
-  .card .link-badge { font-size: 10px; padding: 1px 6px; right: 5px; top: 5px; }
+  main { padding: 14px 12px 6px; }
+  .items { grid-template-columns: 1fr; }
   .levels-preview { grid-template-columns: 1fr; }
   .card-modal { padding: 26px 20px; }
   .modal-title { font-size: 21px; }
+  .class-btn { font-size: 13px; padding: 11px 8px; }
 }
 </style>
 </head>
@@ -212,13 +186,13 @@ main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 10px; position: rel
   <div class="header-left">
     <div class="header-logo">UN</div>
     <div>
-      <h1>Clasificación Estratégica</h1>
+      <h1>¿Objetivo o Sub-objetivo?</h1>
       <span>Sesión 10 · Objetivos estratégicos y sub-objetivos</span>
     </div>
   </div>
   <div class="header-right">
     <div class="chip gold" id="chipLevel">Nivel 1 de 3</div>
-    <div class="chip" id="chipScore">0 / 30 aciertos</div>
+    <div class="chip" id="chipScore">0 / 60 aciertos</div>
     <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵 Música</button>
   </div>
 </header>
@@ -230,24 +204,15 @@ main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 10px; position: rel
       <span class="lvl-title" id="lvlTitle"></span>
     </div>
     <div class="track" id="track"></div>
-    <div class="counter" id="counter">0 / 10 relacionadas</div>
+    <div class="counter" id="counter">0 / 20 clasificados</div>
   </div>
 
-  <div class="board">
-    <div class="column">
-      <div class="col-title">🎯 Objetivos <b>estratégicos</b></div>
-      <div class="cards" id="objCards"></div>
-    </div>
-    <div class="column">
-      <div class="col-title">🧩 Sub-<b>objetivos</b></div>
-      <div class="cards" id="subCards"></div>
-    </div>
-  </div>
+  <div class="items" id="items"></div>
 
   <div class="actions">
-    <button class="btn btn-primary" id="nextBtn" onclick="nextLevel()" disabled>Relaciona todos los objetivos</button>
+    <button class="btn btn-primary" id="nextBtn" onclick="nextLevel()" disabled>Clasifica los 20 enunciados</button>
   </div>
-  <p class="hint" id="hint">Toca un objetivo, luego su sub-objetivo. Vuelve a tocarlos para corregir.</p>
+  <p class="hint" id="hint">Lee cada enunciado y marca si es un objetivo estratégico o un sub-objetivo.</p>
 </main>
 
 <footer class="footer">UNICEBA · Licenciatura en Negocios Internacionales · Planeación Estratégica · Ing. Rodolfo Ramírez</footer>
@@ -256,16 +221,19 @@ main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 10px; position: rel
 <div class="overlay" id="startOverlay">
   <div class="card-modal">
     <div class="modal-tag">Planeación Estratégica · Sesión 10</div>
-    <div class="modal-title">Clasificación Estratégica</div>
-    <div class="modal-sub">Relaciona cada objetivo estratégico con su sub-objetivo</div>
+    <div class="modal-title">¿Objetivo o Sub-objetivo?</div>
+    <div class="modal-sub">Clasifica cada enunciado según su nivel estratégico</div>
     <div class="rules">
       <ul>
-        <li>Habrá <b>3 niveles</b> y en cada uno relacionarás <b>10 objetivos</b> con <b>10 sub-objetivos</b>.</li>
-        <li>Toca un <b>objetivo</b> y después su <b>sub-objetivo</b>. Repite para deshacer o cambiar una relación.</li>
-        <li>La dificultad <b>aumenta</b> en cada nivel: media → difícil → muy difícil.</li>
-        <li>Tu <b>calificación se muestra hasta el final</b>, después de los 3 niveles.</li>
-        <li>Al terminar recibirás <b>retroalimentación</b> de cada respuesta incorrecta y la respuesta correcta.</li>
+        <li>Habrá <b>3 niveles</b> y en cada uno aparecerán <b>20 enunciados</b> en orden aleatorio.</li>
+        <li>De esos 20, unos son <b>objetivos estratégicos</b> y otros <b>sub-objetivos</b>.</li>
+        <li>Para cada uno elige: <b>🎯 Objetivo</b> o <b>🧩 Sub-objetivo</b>. Puedes cambiar tu respuesta antes de avanzar.</li>
+        <li>La dificultad <b>aumenta</b>: media → difícil → muy difícil.</li>
+        <li>Tu <b>calificación se muestra hasta el final</b>, al terminar los 3 niveles.</li>
       </ul>
+    </div>
+    <div class="tip-box">
+      <b>Pista:</b> un <b>objetivo estratégico</b> es un resultado amplio, de largo plazo y de alcance para toda la organización. Un <b>sub-objetivo</b> es un resultado específico, acotado y de más corto plazo que contribuye a un objetivo mayor.
     </div>
     <div class="levels-preview">
       <div class="lv-box"><div class="n">Nivel 1</div><div class="d">Dificultad media</div></div>
@@ -282,232 +250,182 @@ main { max-width: 1100px; margin: 0 auto; padding: 22px 18px 10px; position: rel
 </div>
 
 <script>
-/* ====================== CONTENIDO ====================== */
-const LEVELS = [
-  {
-    label: "Nivel 1 · Dificultad media",
-    title: "Fundamentos: objetivo y su sub-objetivo",
-    pairs: [
-      { o: "Aumentar las ventas en tienda", s: "Elevar el ticket promedio por compra",
-        why: "el ticket promedio mide el gasto de cada cliente en tienda, y al subirlo aumentan las ventas del canal físico." },
-      { o: "Mejorar la satisfacción del cliente", s: "Reducir el tiempo de atención de quejas",
-        why: "atender más rápido las quejas mejora la experiencia y la satisfacción percibida." },
-      { o: "Reducir los costos de operación", s: "Disminuir el desperdicio de insumos",
-        why: "menos desperdicio es menos gasto por unidad y por tanto menor costo operativo." },
-      { o: "Ampliar la cobertura de mercado", s: "Abrir sucursales en nuevas ciudades",
-        why: "más sucursales permiten llegar a territorios donde hoy no hay presencia." },
-      { o: "Fortalecer la marca", s: "Incrementar las menciones en redes sociales",
-        why: "más menciones elevan el reconocimiento y fortalecen la marca." },
-      { o: "Impulsar la innovación", s: "Lanzar dos nuevos productos al año",
-        why: "los nuevos productos son el resultado concreto del esfuerzo de innovación." },
-      { o: "Desarrollar al personal", s: "Capacitar al equipo en habilidades digitales",
-        why: "la capacitación desarrolla las competencias y el talento de las personas." },
-      { o: "Mejorar la logística", s: "Reducir el tiempo de entrega a domicilio",
-        why: "el tiempo de entrega es el indicador central del desempeño logístico." },
-      { o: "Cuidar el medio ambiente", s: "Disminuir la huella de carbono",
-        why: "la huella de carbono mide el impacto ambiental que se busca reducir." },
-      { o: "Fortalecer las finanzas", s: "Elevar el margen de utilidad neta",
-        why: "el margen de utilidad neta refleja la salud y la solidez financiera." }
+/* ====================== CONTENIDO ======================
+   Cada ítem: { text, why }
+   - objetivos: why explica por qué ES objetivo (amplio/largo plazo/organización)
+   - subs: why explica por qué ES sub-objetivo (específico/acotado/contribuye)
+*/
+const POOLS = [
+  { // ===== NIVEL 1 · MEDIA =====
+    objetivos: [
+      { text: "Incrementar la participación de mercado regional", why: "es un resultado amplio y de largo plazo que expresa la dirección competitiva de toda la organización." },
+      { text: "Mejorar la rentabilidad global de la empresa", why: "abarca a toda la empresa y se proyecta al largo plazo." },
+      { text: "Consolidar el liderazgo de la marca a nivel nacional", why: "es un resultado amplio de posicionamiento que compromete a toda la organización." },
+      { text: "Fortalecer la posición financiera de la organización", why: "es un objetivo corporativo de largo plazo, no una acción de un área." },
+      { text: "Impulsar la transformación digital de la empresa", why: "es una meta estratégica que involucra a todas las áreas de la organización." },
+      { text: "Ampliar la presencia internacional de la compañía", why: "define la dirección general de crecimiento en el largo plazo." },
+      { text: "Mejorar la satisfacción global del cliente", why: "es un resultado amplio que compromete a toda la empresa." },
+      { text: "Desarrollar una cultura de innovación organizacional", why: "es un cambio amplio y de largo plazo en toda la organización." },
+      { text: "Elevar la competitividad de la organización", why: "es un fin estratégico de alcance corporativo." },
+      { text: "Diversificar las fuentes de ingreso corporativas", why: "es una directriz estratégica de largo plazo para toda la empresa." },
+      { text: "Garantizar la sostenibilidad del negocio", why: "es un objetivo de largo plazo que da dirección general a la organización." },
+      { text: "Fortalecer la reputación corporativa en el mercado", why: "es un resultado amplio que depende de toda la organización." }
+    ],
+    subs: [
+      { text: "Abrir 10 puntos de venta en el occidente del país", why: "es concreto, con lugar y plazo definidos, y solo contribuye a ampliar la cobertura." },
+      { text: "Reducir el tiempo de entrega de 72 a 48 horas", why: "es un resultado específico y medible de un área (logística)." },
+      { text: "Lanzar dos nuevas líneas de producto este trimestre", why: "es una acción acotada y de corto plazo que alimenta la innovación." },
+      { text: "Capacitar al equipo de ventas en técnicas de negociación", why: "es una actividad específica de un área, de corto plazo." },
+      { text: "Disminuir el consumo eléctrico de la planta un 15%", why: "es un resultado acotado a una instalación concreta." },
+      { text: "Migrar el sistema de facturación a la nube", why: "es una acción puntual de un área que apoya la digitalización." },
+      { text: "Aumentar las menciones de marca en redes un 20%", why: "es un resultado específico y medible del área de marketing." },
+      { text: "Reducir la rotación del personal de piso un 10%", why: "es una meta acotada a un grupo de personal." },
+      { text: "Certificar al proveedor principal en ISO 9001", why: "es un resultado específico dentro de la cadena de suministro." },
+      { text: "Implementar un programa de reciclaje en las oficinas", why: "es una acción acotada que contribuye a la sostenibilidad." },
+      { text: "Rediseñar el proceso de cobranza del área de finanzas", why: "es una acción específica de un área, de corto plazo." },
+      { text: "Elevar el ticket promedio de la sucursal centro", why: "es un resultado acotado a una sola sucursal." }
     ]
   },
-  {
-    label: "Nivel 2 · Difícil",
-    title: "Sub-objetivos por tipo y por área",
-    pairs: [
-      { o: "Incrementar la participación de mercado regional", s: "Ganar cuota frente a los competidores locales",
-        why: "la participación de mercado se gana quitándole cuota a los competidores de la región." },
-      { o: "Mejorar la rentabilidad por unidad de negocio", s: "Elevar el retorno sobre la inversión por sucursal",
-        why: "el retorno por sucursal mide la rentabilidad de cada unidad de negocio." },
-      { o: "Diversificar el portafolio de productos", s: "Incursionar en una nueva categoría de servicio",
-        why: "entrar a una nueva categoría amplía y diversifica la oferta actual." },
-      { o: "Optimizar la productividad industrial", s: "Aumentar las unidades producidas por hora",
-        why: "producir más por hora es la medida directa de la productividad industrial." },
-      { o: "Fortalecer la responsabilidad social", s: "Certificar prácticas laborales justas",
-        why: "una certificación laboral justa demuestra el compromiso social de la empresa." },
-      { o: "Consolidar la transformación digital", s: "Migrar los procesos clave a la nube",
-        why: "llevar los procesos clave a la nube es un paso concreto de digitalización." },
-      { o: "Fidelizar a los clientes estratégicos", s: "Aumentar la tasa de recompra",
-        why: "la recompra mide qué tanto los clientes clave vuelven a comprar." },
-      { o: "Robustecer la cadena de suministro", s: "Diversificar a proveedores locales",
-        why: "tener proveedores alternos reduce el riesgo y refuerza la cadena de suministro." },
-      { o: "Mejorar el clima laboral", s: "Reducir la rotación de personal",
-        why: "menos rotación indica que el personal está más satisfecho y el clima mejora." },
-      { o: "Incrementar la eficiencia comercial", s: "Reducir el costo de adquisición de clientes",
-        why: "conseguir clientes a menor costo eleva la eficiencia del área comercial." }
+  { // ===== NIVEL 2 · DIFÍCIL =====
+    objetivos: [
+      { text: "Consolidar la operación en el norte del país", why: "es un resultado amplio de largo plazo que agrupa a varias sucursales y áreas." },
+      { text: "Incrementar la rentabilidad de la unidad de negocio de alimentos", why: "es un objetivo de alcance de unidad de negocio, más amplio que una tarea puntual." },
+      { text: "Fortalecer la cadena de suministro a nivel corporativo", why: "su alcance es corporativo y su horizonte es de largo plazo." },
+      { text: "Posicionar la marca en el segmento juvenil mexicano", why: "es un resultado estratégico de posicionamiento, no una campaña puntual." },
+      { text: "Impulsar el crecimiento del canal de e-commerce", why: "es una dirección estratégica de canal, de mediano-largo plazo." },
+      { text: "Mejorar la experiencia del cliente en todos los canales", why: "es un resultado amplio que involucra a toda la organización." },
+      { text: "Alcanzar la eficiencia operativa en las tres plantas", why: "es un objetivo de alcance global que abarca varias operaciones." },
+      { text: "Desarrollar el talento directivo de la organización", why: "es un fin de largo plazo para toda la organización." },
+      { text: "Reducir la huella ambiental de la operación global", why: "es un objetivo amplio, de largo plazo y de alcance corporativo." },
+      { text: "Asegurar la continuidad del negocio ante riesgos", why: "es una meta estratégica de alcance corporativo." },
+      { text: "Elevar la productividad de toda el área comercial", why: "es un objetivo funcional de área: más amplio que una acción concreta." },
+      { text: "Diversificar la oferta hacia el segmento empresarial", why: "es una dirección estratégica de largo plazo para el portafolio." }
+    ],
+    subs: [
+      { text: "Abrir 5 sucursales en Monterrey durante el primer semestre", why: "es una acción acotada, con lugar y plazo específicos." },
+      { text: "Reducir el desperdicio en la línea de lácteos un 12%", why: "es un resultado específico de una sola línea de producción." },
+      { text: "Implementar un centro de distribución en Guadalajara", why: "es una acción concreta que apoya la cadena de suministro." },
+      { text: "Realizar 3 campañas en TikTok para el público de 18 a 24 años", why: "es una actividad específica y de corto plazo del área de marketing." },
+      { text: "Aumentar la conversión del sitio web del 1.5% al 3%", why: "es una meta acotada del canal digital." },
+      { text: "Implementar un chat de soporte 24/7 en el canal digital", why: "es una acción puntual del área de atención al cliente." },
+      { text: "Automatizar el empaque final de la planta de Puebla", why: "es un resultado específico de una sola planta." },
+      { text: "Diseñar un programa de mentorías para gerentes de área", why: "es una acción acotada del área de recursos humanos." },
+      { text: "Sustituir 50 vehículos de reparto por unidades eléctricas", why: "es una medida concreta y medible de la operación." },
+      { text: "Elaborar un plan de contingencia para la planta de Toluca", why: "es un entregable específico de una instalación." },
+      { text: "Capacitar a los vendedores en el nuevo CRM", why: "es una actividad concreta y de corto plazo." },
+      { text: "Crear una línea de servicios para clientes corporativos", why: "es un resultado acotado que contribuye a diversificar la oferta." }
     ]
   },
-  {
-    label: "Nivel 3 · Muy difícil",
-    title: "Distinciones finas: lee con cuidado",
-    pairs: [
-      { o: "Crecer en el mercado nacional", s: "Abrir 20 tiendas en el interior del país",
-        why: "las nuevas tiendas dentro del país atienden el crecimiento en el mercado nacional." },
-      { o: "Crecer en el mercado internacional", s: "Entrar a dos países de Latinoamérica",
-        why: "ingresar a otros países es la vía directa del crecimiento internacional." },
-      { o: "Crecer en el canal digital", s: "Multiplicar las ventas en línea",
-        why: "el comercio electrónico es el canal digital cuyo crecimiento se busca." },
-      { o: "Crecer en el segmento premium", s: "Lanzar una línea de alta gama",
-        why: "una línea de alta gama apunta justamente al segmento premium." },
-      { o: "Mejorar la rentabilidad operativa", s: "Reducir el costo unitario de producción",
-        why: "bajar el costo de producción mejora el margen que deja la operación." },
-      { o: "Mejorar la rentabilidad financiera", s: "Elevar el rendimiento sobre el capital invertido",
-        why: "el rendimiento sobre el capital mide la rentabilidad para el inversionista." },
-      { o: "Mejorar la rentabilidad comercial", s: "Aumentar el margen bruto por venta",
-        why: "el margen por venta refleja la rentabilidad que genera el área comercial." },
-      { o: "Elevar la productividad del personal", s: "Reducir el ausentismo laboral",
-        why: "menos ausentismo implica más tiempo efectivo de trabajo por persona." },
-      { o: "Elevar la productividad de las plantas", s: "Incrementar la producción por hora-máquina",
-        why: "más producción por hora-máquina mide la productividad del equipo industrial." },
-      { o: "Elevar la productividad administrativa", s: "Digitalizar los trámites internos",
-        why: "digitalizar trámites reduce tiempos y eleva la productividad administrativa." }
+  { // ===== NIVEL 3 · MUY DIFÍCIL =====
+    objetivos: [
+      { text: "Convertir a la empresa en referente nacional del sector", why: "expresa la dirección y la ambición de largo plazo de toda la organización." },
+      { text: "Transformar el modelo de negocio hacia la economía circular", why: "es un cambio estructural y de largo plazo que abarca a toda la empresa." },
+      { text: "Liderar la transición energética de la industria en la región", why: "es una meta amplia de posicionamiento e impacto sectorial." },
+      { text: "Consolidar la expansión internacional en cinco mercados clave", why: "abarca varios mercados a la vez y se proyecta al largo plazo." },
+      { text: "Crear valor compartido para accionistas y comunidades", why: "es un fin estratégico amplio que orienta a toda la organización." },
+      { text: "Fortalecer la resiliencia del negocio frente a un entorno volátil", why: "es un objetivo estratégico de alcance corporativo." },
+      { text: "Escalar el modelo operativo a toda la organización", why: "es un resultado amplio que cubre a la organización completa." },
+      { text: "Posicionar a la empresa entre las tres mejores del país", why: "es una meta de posicionamiento de largo plazo y alcance total." },
+      { text: "Institucionalizar la cultura de datos en la organización", why: "es un cambio cultural amplio y de largo plazo." },
+      { text: "Garantizar la rentabilidad del portafolio en el largo plazo", why: "es un fin estratégico de largo plazo sobre todo el portafolio." },
+      { text: "Impulsar la reinvención del sector logístico", why: "es una ambición amplia de impacto sectorial y de largo plazo." },
+      { text: "Asegurar la permanencia y trascendencia de la empresa", why: "expresa el más alto objetivo de largo plazo de la organización." }
+    ],
+    subs: [
+      { text: "Reducir 30% las emisiones de la planta de Monterrey este año", why: "es una meta acotada a una planta y a un plazo corto." },
+      { text: "Firmar acuerdos con dos universidades para investigación aplicada", why: "es una acción concreta que apoya la innovación." },
+      { text: "Instalar paneles solares en el centro de distribución de Querétaro", why: "es una medida específica de una sola instalación." },
+      { text: "Abrir una filial comercial en Bogotá en 2026", why: "es una acción puntual que contribuye a la expansión internacional." },
+      { text: "Destinar el 1% de las utilidades a un fondo comunitario", why: "es una decisión concreta y medible de un año." },
+      { text: "Crear un comité de riesgos con reporte mensual al consejo", why: "es una acción específica de gobernanza." },
+      { text: "Documentar el manual operativo de las tiendas piloto", why: "es un entregable concreto de un proyecto." },
+      { text: "Alcanzar un NPS de 70 en la encuesta anual de clientes", why: "es una meta específica y medible de experiencia del cliente." },
+      { text: "Implementar un tablero de datos para el área de compras", why: "es una acción acotada a un área." },
+      { text: "Reducir la deuda bancaria en 200 millones de pesos", why: "es una meta financiera puntual y medible, no una dirección general." },
+      { text: "Renovar la flota de tractocamiones de la ruta norte", why: "es una acción concreta de la operación." },
+      { text: "Constituir un fondo de ahorro para imprevistos operativos", why: "es una medida específica de corto-mediano plazo." }
     ]
   }
 ];
 
 /* ====================== ESTADO ====================== */
-let state = {
-  li: 0,
-  order: [],
-  links: [],
-  subLinked: [],
-  selected: null,
-  results: [],
-  totalCorrect: 0,
-  started: false
-};
+let state = { li: 0, items: [], answers: [], results: [], totalCorrect: 0, started: false };
 
-function shuffle(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
+function shuffle(a) { const x = a.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [x[i], x[j]] = [x[j], x[i]]; } return x; }
+function sample(a, n) { return shuffle(a).slice(0, n); }
 
 /* ====================== FLUJO ====================== */
 function startGame() {
   document.getElementById('startOverlay').classList.add('hidden');
-  state.li = 0;
-  state.results = [];
-  state.totalCorrect = 0;
-  state.started = true;
+  state = { li: 0, items: [], answers: [], results: [], totalCorrect: 0, started: true };
   setupLevel();
 }
 
 function setupLevel() {
-  const pairs = LEVELS[state.li].pairs;
-  state.order = shuffle(pairs.map((p, i) => ({ pairIndex: i, text: p.s })));
-  state.links = new Array(pairs.length).fill(null);
-  state.subLinked = new Array(pairs.length).fill(null);
-  state.selected = null;
+  const pool = POOLS[state.li];
+  const objetivos = sample(pool.objetivos, 10).map(x => ({ text: x.text, type: 'objetivo', why: x.why }));
+  const subs = sample(pool.subs, 10).map(x => ({ text: x.text, type: 'sub', why: x.why }));
+  state.items = shuffle(objetivos.concat(subs));
+  state.answers = new Array(state.items.length).fill(null);
   render();
 }
 
 function render() {
-  const level = LEVELS[state.li];
-  const pairs = level.pairs;
-
+  const level = POOLS[state.li];
   document.getElementById('lvlLabel').textContent = 'Nivel ' + (state.li + 1);
-  document.getElementById('lvlTitle').textContent = level.title;
+  document.getElementById('lvlTitle').textContent = level.title || ['Fundamentos: distingue el nivel', 'Enunciados con forma parecida', 'Distinciones finas: lee con cuidado'][state.li];
   document.getElementById('chipLevel').textContent = 'Nivel ' + (state.li + 1) + ' de 3';
-  document.getElementById('chipScore').textContent = state.totalCorrect + ' / 30 aciertos';
+  document.getElementById('chipScore').textContent = state.totalCorrect + ' / 60 aciertos';
 
   let track = '';
   for (let i = 0; i < 3; i++) {
     let cls = 'dot';
-    if (i < state.li) cls += ' done';
-    else if (i === state.li) cls += ' active';
+    if (i < state.li) cls += ' done'; else if (i === state.li) cls += ' active';
     track += '<div class="' + cls + '"></div>';
   }
   document.getElementById('track').innerHTML = track;
 
-  let objHtml = '';
-  for (let i = 0; i < pairs.length; i++) {
-    const j = state.links[i];
-    const selCls = (state.selected && state.selected.type === 'obj' && state.selected.index === i) ? ' selected' : '';
-    const linkedCls = j !== null ? ' linked' : '';
-    const badge = j !== null ? '<span class="link-badge">S' + (j + 1) + '</span>' : '';
-    objHtml += '<div class="card obj-card' + selCls + linkedCls + '" onclick="pick(\'obj\',' + i + ')">' +
-      '<span class="tag">O' + (i + 1) + '</span>' +
-      '<span class="txt">' + pairs[i].o + '</span>' + badge + '</div>';
-  }
-  document.getElementById('objCards').innerHTML = objHtml;
+  let html = '';
+  state.items.forEach((item, idx) => {
+    const a = state.answers[idx];
+    const doneCls = a ? ' done' : '';
+    html += '<div class="item-card' + doneCls + '">';
+    html += '<div class="item-num">Enunciado ' + (idx + 1) + '</div>';
+    html += '<div class="item-text">' + item.text + '</div>';
+    html += '<div class="item-actions">';
+    html += '<button class="class-btn obj' + (a === 'objetivo' ? ' active' : '') + '" onclick="answer(' + idx + ',\'objetivo\')">🎯 Objetivo</button>';
+    html += '<button class="class-btn sub' + (a === 'sub' ? ' active' : '') + '" onclick="answer(' + idx + ',\'sub\')">🧩 Sub-objetivo</button>';
+    html += '</div></div>';
+  });
+  document.getElementById('items').innerHTML = html;
 
-  let subHtml = '';
-  for (let j = 0; j < state.order.length; j++) {
-    const linkedObj = state.subLinked[j];
-    const selCls = (state.selected && state.selected.type === 'sub' && state.selected.index === j) ? ' selected' : '';
-    const linkedCls = linkedObj !== null ? ' linked' : '';
-    const badge = linkedObj !== null ? '<span class="link-badge">O' + (linkedObj + 1) + '</span>' : '';
-    subHtml += '<div class="card sub-card' + selCls + linkedCls + '" onclick="pick(\'sub\',' + j + ')">' +
-      '<span class="tag">S' + (j + 1) + '</span>' +
-      '<span class="txt">' + state.order[j].text + '</span>' + badge + '</div>';
-  }
-  document.getElementById('subCards').innerHTML = subHtml;
-
-  const done = state.links.filter(x => x !== null).length;
-  document.getElementById('counter').textContent = done + ' / 10 relacionadas';
+  const done = state.answers.filter(x => x !== null).length;
+  document.getElementById('counter').textContent = done + ' / 20 clasificados';
 
   const btn = document.getElementById('nextBtn');
-  if (done === pairs.length) {
+  if (done === state.items.length) {
     btn.disabled = false;
     btn.textContent = state.li < 2 ? 'Siguiente nivel →' : 'Ver mi calificación 🏁';
     document.getElementById('hint').textContent = '¡Listo! Puedes avanzar cuando quieras.';
   } else {
     btn.disabled = true;
-    btn.textContent = 'Relaciona todos los objetivos';
-    document.getElementById('hint').textContent = 'Toca un objetivo, luego su sub-objetivo. Vuelve a tocarlos para corregir.';
+    btn.textContent = 'Clasifica los 20 enunciados';
+    document.getElementById('hint').textContent = 'Lee cada enunciado y marca si es un objetivo estratégico o un sub-objetivo.';
   }
 }
 
-function pick(type, index) {
-  const sel = state.selected;
-  if (sel && sel.type === type && sel.index === index) {
-    state.selected = null;
-    render();
-    return;
-  }
-  if (sel && sel.type !== type) {
-    const objIdx = type === 'obj' ? index : sel.index;
-    const subIdx = type === 'sub' ? index : sel.index;
-    link(objIdx, subIdx);
-    state.selected = null;
-    render();
-    return;
-  }
-  state.selected = { type: type, index: index };
+function answer(idx, choice) {
+  state.answers[idx] = (state.answers[idx] === choice) ? null : choice;
   render();
 }
 
-function link(objIdx, subIdx) {
-  const prevSub = state.links[objIdx];
-  if (prevSub !== null) state.subLinked[prevSub] = null;
-  const prevObj = state.subLinked[subIdx];
-  if (prevObj !== null) state.links[prevObj] = null;
-  state.links[objIdx] = subIdx;
-  state.subLinked[subIdx] = objIdx;
-}
-
-/* ====================== AVANCE Y RESULTADOS ====================== */
 function nextLevel() {
-  const pairs = LEVELS[state.li].pairs;
-  const levelResults = [];
-  for (let i = 0; i < pairs.length; i++) {
-    const j = state.links[i];
-    const sub = state.order[j];
-    const ok = sub.pairIndex === i;
+  const levelResults = state.items.map((item, i) => {
+    const chosen = state.answers[i];
+    const ok = chosen === item.type;
     if (ok) state.totalCorrect++;
-    levelResults.push({
-      objText: pairs[i].o,
-      chosenText: sub.text,
-      ok: ok,
-      correctText: pairs[i].s,
-      correctWhy: pairs[i].why,
-      chosenBelongsTo: LEVELS[state.li].pairs[sub.pairIndex].o,
-      chosenWhy: LEVELS[state.li].pairs[sub.pairIndex].why
-    });
-  }
+    return { text: item.text, correctType: item.type, chosen: chosen, ok: ok, why: item.why };
+  });
   state.results.push(levelResults);
 
   if (state.li < 2) {
@@ -519,8 +437,10 @@ function nextLevel() {
   }
 }
 
+const TYPELABEL = { objetivo: 'Objetivo estratégico', sub: 'Sub-objetivo' };
+
 function showResults() {
-  const total = 30;
+  const total = 60;
   const correct = state.totalCorrect;
   const pct = Math.round((correct / total) * 100);
   const grade10 = ((correct / total) * 10).toFixed(1);
@@ -535,47 +455,39 @@ function showResults() {
   html += '<div class="breakdown">';
   for (let l = 0; l < 3; l++) {
     const c = state.results[l].filter(r => r.ok).length;
-    html += '<div class="bd">Nivel ' + (l + 1) + ': <b>' + c + '/10</b></div>';
+    html += '<div class="bd">Nivel ' + (l + 1) + ': <b>' + c + '/20</b></div>';
   }
   html += '</div>';
   html += '<p style="margin-top:14px;font-size:13px;color:#888">📸 Toma una captura de esta pantalla como evidencia de la actividad.</p>';
   html += '</div>';
 
   const wrongs = [];
-  state.results.forEach((lvl, li) => {
-    lvl.forEach(r => { if (!r.ok) wrongs.push({ li: li, r: r }); });
-  });
+  state.results.forEach((lvl, li) => lvl.forEach(r => { if (!r.ok) wrongs.push({ li: li, r: r }); }));
 
   if (wrongs.length === 0) {
-    html += '<div class="fb-perfect">🎉 ¡Perfecto! Relacionaste correctamente los 30 objetivos con sus sub-objetivos.</div>';
+    html += '<div class="fb-perfect">🎉 ¡Perfecto! Clasificaste correctamente los 60 enunciados.</div>';
   } else {
     html += '<div class="feedback-title">Retroalimentación de respuestas incorrectas (' + wrongs.length + ')</div>';
-    let currentLevel = -1;
+    let cur = -1;
     wrongs.forEach(item => {
-      if (item.li !== currentLevel) {
-        currentLevel = item.li;
-        html += '<div class="fb-level-head">' + LEVELS[item.li].label + '</div>';
-      }
+      if (item.li !== cur) { cur = item.li; html += '<div class="fb-level-head">Nivel ' + (item.li + 1) + '</div>'; }
       const r = item.r;
       html += '<div class="fb-item">';
-      html += '<div class="fb-obj">🎯 Objetivo: ' + r.objText + '</div>';
-      html += '<div class="fb-yours">✗ Asociaste: ' + r.chosenText + '</div>';
-      html += '<div class="fb-why">¿Por qué está mal? Ese sub-objetivo no pertenece a este objetivo: corresponde a <b>«' + r.chosenBelongsTo + '»</b>, porque ' + r.chosenWhy + '</div>';
-      html += '<div class="fb-correct">✔ Respuesta correcta: ' + r.correctText + '</div>';
-      html += '<div class="fb-why" style="color:#1e7a46">Por qué: ' + r.correctWhy + '</div>';
+      html += '<div class="fb-obj">📝 ' + r.text + '</div>';
+      html += '<div class="fb-yours">✗ Lo clasificaste como: ' + TYPELABEL[r.chosen] + '</div>';
+      html += '<div class="fb-why">¿Por qué está mal? En realidad es un <b>' + TYPELABEL[r.correctType] + '</b>, porque ' + r.why + '</div>';
+      html += '<div class="fb-correct">✔ Respuesta correcta: ' + TYPELABEL[r.correctType] + '</div>';
       html += '</div>';
     });
   }
 
   html += '<button class="btn btn-primary" style="width:100%;margin-top:20px" onclick="restart()">Volver a jugar</button>';
-
   document.getElementById('resultsCard').innerHTML = html;
   document.getElementById('resultsOverlay').classList.remove('hidden');
 }
 
 function restart() {
   document.getElementById('resultsOverlay').classList.add('hidden');
-  state = { li: 0, order: [], links: [], subLinked: [], selected: null, results: [], totalCorrect: 0, started: false };
   document.getElementById('startOverlay').classList.remove('hidden');
 }
 
@@ -586,12 +498,10 @@ function toggleMusic() {
   if (!musicOn) {
     audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
-    musicOn = true;
-    step = 0;
+    musicOn = true; step = 0;
     document.getElementById('musicBtn').textContent = '🔇 Silenciado';
     musicTimer = setInterval(() => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
+      const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
       osc.type = 'triangle';
       osc.frequency.value = MELODY[step % MELODY.length];
       gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
@@ -602,8 +512,7 @@ function toggleMusic() {
       step++;
     }, 380);
   } else {
-    musicOn = false;
-    clearInterval(musicTimer);
+    musicOn = false; clearInterval(musicTimer);
     document.getElementById('musicBtn').textContent = '🎵 Música';
   }
 }
